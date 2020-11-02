@@ -15,6 +15,8 @@ ENV KUBE_LATEST_VERSION="v1.19.3"
 # https://github.com/kubernetes/helm/releases
 ENV HELM_VERSION="v3.4.0"
 
+ENV PATH="/usr/local/bin:${PATH}"
+
 RUN apk add --no-cache ca-certificates bash git openssh curl \
     && wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl \
     && chmod +x /usr/local/bin/kubectl \
@@ -26,6 +28,19 @@ RUN apk add --no-cache ca-certificates bash git openssh curl \
 
 ADD https://github.com/kreuzwerker/envplate/releases/download/v0.0.8/ep-linux /usr/local/bin/ep
 RUN chmod +x /usr/local/bin/ep
+
+RUN apk add --no-cache \
+        python3 \
+        py3-pip \
+    && pip3 install --upgrade pip \
+    && pip3 install \
+        awscli \
+    && rm -rf /var/cache/apk/*
+
+RUN aws --version
+
+ADD https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.8/2020-09-18/bin/linux/amd64/aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
+RUN chmod +x /usr/local/bin/aws-iam-authenticator
 
 WORKDIR /config
 
