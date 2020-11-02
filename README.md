@@ -27,6 +27,5 @@ deploy:
     - kubectl config set-credentials gitlab --token="${USER_TOKEN}"
     - kubectl config set-context default --cluster=k8s --user=gitlab
     - kubectl config use-context default
-    - helm init --client-only
     - helm upgrade your-helm-deployment-name ./your-helm-deployment-path --install --set image.tag=${CI_COMMIT_SHORT_SHA}
 ```
