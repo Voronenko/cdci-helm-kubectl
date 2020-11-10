@@ -35,6 +35,7 @@ RUN apk add --no-cache \
     && pip3 install --upgrade pip \
     && pip3 install \
         awscli \
+        ruamel.yaml \
     && rm -rf /var/cache/apk/*
 
 RUN aws --version
