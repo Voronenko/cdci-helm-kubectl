@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 """
 
 update_chart_yaml.py path/Chart.yaml attrName "attrValue"
